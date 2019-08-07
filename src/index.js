@@ -47,6 +47,8 @@
  *  'import/prefer-default-export': 'off',
  * }
  *
+ * instalando react-router-dom (fazer roteamento no front-end)
+ * yarn add react-router-dom
  *
  */
 
