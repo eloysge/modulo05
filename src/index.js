@@ -50,6 +50,18 @@
  * instalando react-router-dom (fazer roteamento no front-end)
  * yarn add react-router-dom
  *
+ * instalando styled-components
+ * yarn add styled-components
+ *
+ * INSTALAÇÅO DO STYLED-COMPONENTS NO VS-CODE
+ * procurar por "vscode-styled-components"
+ *
+ * instalação do react-icons (repositorio de icones)
+ * yarn add react-icons
+ *
+ * instalação do axios (acesso a API/REST)
+ * yarn add axios
+ *
  */
 
 import React from 'react';
