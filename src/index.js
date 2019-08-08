@@ -62,6 +62,9 @@
  * instalação do axios (acesso a API/REST)
  * yarn add axios
  *
+ * instalação do prop-types
+ * yarn add prop-types
+ *
  */
 
 import React from 'react';

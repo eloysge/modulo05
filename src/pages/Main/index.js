@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
-import { Title, Container, Form, SubmitButton } from './styles';
+import { Link } from 'react-router-dom';
+import Container from '../../components/Container';
+import { Title, Form, SubmitButton, List } from './styles';
 import api from '../../services/api';
 
 class Main extends Component {
@@ -9,6 +11,22 @@ class Main extends Component {
     repos: [],
     loading: false,
   };
+
+  // Carregar lista
+  componentDidMount() {
+    const repox = localStorage.getItem('repositories');
+    if (repox) {
+      this.setState({ repos: JSON.parse(repox) });
+    }
+  }
+
+  // prevProps, prevState ("_" quando não user o parametro)
+  componentDidUpdate(_, prevState) {
+    const { repos } = this.state;
+    if (prevState.repos !== repos) {
+      localStorage.setItem('repositories', JSON.stringify(repos));
+    }
+  }
 
   handleInputchange = event => {
     this.setState({ newRepo: event.target.value });
@@ -30,11 +48,11 @@ class Main extends Component {
   };
 
   render() {
-    const { newRepo, loading } = this.state;
+    const { newRepo, loading, repos } = this.state;
     return (
       <>
         <Title error={false}>
-          Main Page<small>Sge Informática</small>
+          Sge Informática<small>ReactJS</small>
         </Title>
         <Container>
           <h1>
@@ -56,6 +74,16 @@ class Main extends Component {
               )}
             </SubmitButton>
           </Form>
+          <List>
+            {repos.map(repo => (
+              <li key={repo.name}>
+                <span>{repo.name}</span>
+                <Link to={`/repository/${encodeURIComponent(repo.name)}`}>
+                  detalhes
+                </Link>
+              </li>
+            ))}
+          </List>
         </Container>
       </>
     );

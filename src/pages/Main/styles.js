@@ -1,35 +1,17 @@
 import styled, { keyframes, css } from 'styled-components';
 
 export const Title = styled.h1`
-  font-size: 32px;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
   color: ${props => (props.error ? 'red' : '#FFF')};
   font-family: Arial, Helvetica, sans-serif;
 
   small {
-    font-size: 18px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
     color: yellow;
     padding: 10px;
-  }
-`;
-
-export const Container = styled.div`
-  max-width: 700px;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  margin: 80px auto;
-  font-family: 'Courier New', Courier, monospace;
-
-  h1 {
-    font-size: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  svg {
-    margin-right: 10px;
   }
 `;
 
@@ -83,4 +65,28 @@ export const SubmitButton = styled.button.attrs(props => ({
         animation: ${rotate} 2s linear infinite;
       }
     `}
+`;
+
+export const List = styled.ul`
+  list-style: none;
+  margin-top: 30px;
+
+  li {
+    padding: 15px, 0;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & + li {
+      padding-top: 10px;
+      border-top: 1px solid yellow;
+    }
+
+    a {
+      color: #7159c1;
+      text-decoration: none;
+    }
+  }
 `;
