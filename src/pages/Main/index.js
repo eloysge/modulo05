@@ -56,6 +56,7 @@ class Main extends Component {
       this.setState({
         loading: false,
       });
+      // eslint-disable-next-line no-alert
       alert(error);
     }
   };
