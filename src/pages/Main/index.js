@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
+import { FaGithubAlt, FaPlus, FaSpinner, FaTrash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
 import { Title, Form, SubmitButton, List } from './styles';
@@ -10,17 +10,22 @@ class Main extends Component {
     newRepo: '',
     repos: [],
     loading: false,
+    empty: true,
   };
 
   // Carregar lista
   componentDidMount() {
     const repox = localStorage.getItem('repositories');
     if (repox) {
-      this.setState({ repos: JSON.parse(repox) });
+      const repos = JSON.parse(repox);
+      this.setState({
+        repos,
+        empty: repos.length === 0,
+      });
     }
   }
 
-  // prevProps, prevState ("_" quando não user o parametro)
+  // prevProps, prevState ("_" quando não usar o parâmetro)
   componentDidUpdate(_, prevState) {
     const { repos } = this.state;
     if (prevState.repos !== repos) {
@@ -36,19 +41,36 @@ class Main extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     const { newRepo, repos } = this.state;
-    const response = await api.get(`/repos/${newRepo}`);
-    const data = {
-      name: response.data.full_name,
-    };
+    try {
+      const response = await api.get(`/repos/${newRepo}`);
+      const data = {
+        name: response.data.full_name,
+      };
+      this.setState({
+        repos: [...repos, data],
+        newRepo: '',
+        loading: false,
+        empty: false,
+      });
+    } catch (error) {
+      this.setState({
+        loading: false,
+      });
+      alert(error);
+    }
+  };
+
+  handleClear = async () => {
+    await localStorage.removeItem('repositories');
     this.setState({
-      repos: [...repos, data],
       newRepo: '',
-      loading: false,
+      repos: [],
+      empty: true,
     });
   };
 
   render() {
-    const { newRepo, loading, repos } = this.state;
+    const { newRepo, loading, repos, empty } = this.state;
     return (
       <>
         <Title error={false}>
@@ -58,6 +80,9 @@ class Main extends Component {
           <h1>
             <FaGithubAlt />
             Repositórios
+            <button type="button" onClick={this.handleClear} disabled={empty}>
+              <FaTrash />
+            </button>
           </h1>
           <Form onSubmit={this.handleSubmit}>
             <input
